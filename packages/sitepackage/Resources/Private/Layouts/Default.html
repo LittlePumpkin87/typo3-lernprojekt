@@ -1,0 +1,31 @@
+<!doctype html>
+<html
+  lang="de"
+  data-namespace-typo3-fluid="true"
+  xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lernprojekt</title>
+  </head>
+  <body>
+    <header>
+      <a href="/">Lernprojekt</a>
+      <nav>
+        <ul>
+          <f:for each="{mainNavigation}" as="item">
+            <li><a href="{item.link}">{item.title}</a></li>
+          </f:for>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <f:render section="Main" />
+    </main>
+
+    <footer>
+      <p>&copy; Lernprojekt</p>
+    </footer>
+  </body>
+</html>

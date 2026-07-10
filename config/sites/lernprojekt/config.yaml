@@ -1,3 +1,6 @@
+dependencies:
+  - littlepumpkin/lernprojekt
+
 base: 'https://lernprojekt.ddev.site/'
 languages:
   -

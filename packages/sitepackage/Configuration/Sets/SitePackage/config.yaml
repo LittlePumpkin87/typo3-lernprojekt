@@ -1,0 +1,4 @@
+name: littlepumpkin/lernprojekt
+label: 'Lernprojekt Sitepackage'
+dependencies:
+  - typo3/fluid-styled-content

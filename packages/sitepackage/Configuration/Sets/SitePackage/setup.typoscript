@@ -1,0 +1,33 @@
+page = PAGE
+page {
+    10 = FLUIDTEMPLATE
+    10 {
+        templateName = Default
+        templateRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Templates/
+        }
+        partialRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Partials/
+        }
+        layoutRootPaths {
+            10 = EXT:sitepackage/Resources/Private/Layouts/
+        }
+        dataProcessing {
+            10 = menu
+            10 {
+                special = directory
+                special.value = 1
+                as = mainNavigation
+            }
+        }
+    }
+}
+
+lib.mainContent = CONTENT
+lib.mainContent {
+    table = tt_content
+    select {
+        orderBy = sorting
+        where = {#colPos}=0
+    }
+}

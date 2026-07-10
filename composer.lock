@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a751fdadce06bf32e23bd53515ca93ba",
+    "content-hash": "f55fcab48678efe7cb237a85b6eeb030",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1147,6 +1147,36 @@
                 }
             ],
             "time": "2026-07-08T15:56:20+00:00"
+        },
+        {
+            "name": "littlepumpkin/sitepackage",
+            "version": "1.0.0",
+            "dist": {
+                "type": "path",
+                "url": "./packages/sitepackage",
+                "reference": "a1742517481eccfc001d65a263969220bd3cf329"
+            },
+            "require": {
+                "typo3/cms-core": "^13.4"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "extension-key": "sitepackage"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Littlepumpkin\\Sitepackage\\": "Classes/"
+                }
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Lernprojekt Sitepackage",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "lolli42/finediff",

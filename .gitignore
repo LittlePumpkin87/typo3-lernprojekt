@@ -8,3 +8,9 @@ nbproject
 !/public/.htaccess
 /config/system/settings.php
 
+# fileadmin gehört ins Repo: der DB-Seed referenziert diese Dateien,
+# ohne sie ist der Seed kaputt. Nur die Temp-Ordner bleiben draußen.
+!/public/fileadmin
+/public/fileadmin/_temp_
+/public/fileadmin/_processed_
+

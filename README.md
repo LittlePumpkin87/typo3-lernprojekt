@@ -1,66 +1,78 @@
-# TYPO3 CMS Base Distribution
+# typo3-lernprojekt
 
-Get going quickly with TYPO3 CMS.
+TYPO3 v13 Sitepackage, von Grund auf gebaut — ohne Generator, ohne Boilerplate-Kit.
 
-## Prerequisites
+Dies ist eines von **drei Lernprojekten**, die dieselbe fiktive Agentur-Website
+„Pumpkin Studio" umsetzen: einmal in TYPO3, einmal als WordPress-Block-Theme, einmal in
+Astro. Gleiche Seiten, gleiche Inhaltstypen, gleiche Design-Tokens — drei völlig
+verschiedene Wege dorthin. Die gemeinsame, eingefrorene Spezifikation liegt in
+[docs/SPEC.md](docs/SPEC.md).
 
-* PHP 8.2
-* [Composer](https://getcomposer.org/download/)
+| Repo | System |
+|---|---|
+| [typo3-lernprojekt](https://github.com/LittlePumpkin87/typo3-lernprojekt) | TYPO3 v13.4 |
+| [wp-lernprojekt](https://github.com/LittlePumpkin87/wp-lernprojekt) | WordPress Block-Theme (FSE) |
+| [astro-lernprojekt](https://github.com/LittlePumpkin87/astro-lernprojekt) | Astro (SSG) |
 
-## Quickstart
+Der Systemvergleich wird fortlaufend in
+[docs/COMPARE.md](https://github.com/LittlePumpkin87/astro-lernprojekt/blob/main/docs/COMPARE.md)
+gesammelt.
 
-* `composer create-project typo3/cms-base-distribution project-name ^13`
-* `cd project-name`
+## Stack
 
-Note that this distribution installs most, but not all of the TYPO3 CMS core extensions.
-Depending on your need you might also want to install other TYPO3 extensions from
-[packagist.org](https://packagist.org/?type=typo3-cms-framework).
+TYPO3 **13.4** (Composer-Distribution) · DDEV · Apache + PHP 8.4 · MariaDB 11.8 ·
+Docroot `public`
 
-### Setup
+## Was hier drin steckt
 
-To start an interactive installation, you can do so by executing the following
-command and then follow the wizard:
+Das Sitepackage nutzt konsequent die **v13-Site-Sets** statt der alten
+Template-Datensätze im Backend — die gesamte Konfiguration liegt damit im Code und in Git:
 
-```bash
-composer exec typo3 setup
+```
+packages/sitepackage/
+├── composer.json                                  Extension-Key "sitepackage"
+├── Configuration/Sets/SitePackage/
+│   ├── config.yaml                                Set "littlepumpkin/lernprojekt"
+│   └── setup.typoscript                           page = PAGE → FLUIDTEMPLATE,
+│                                                  menu-DataProcessor, lib.mainContent
+└── Resources/Private/
+    ├── Layouts/Default.html                       Seitengeruest, Navigation, Footer
+    └── Templates/Default.html                     Content-Bereich
+
+config/sites/lernprojekt/config.yaml               base, rootPageId, dependencies → Set
 ```
 
-### Setup unattended (optional)
+Der Weg eines Requests: Site-Config löst Domain und Seite auf → das per `dependencies`
+aktivierte Site Set bringt sein TypoScript mit → `page = PAGE` rendert ein FLUIDTEMPLATE →
+DataProcessor und `CONTENT` stellen Navigation und Seiteninhalte bereit → Fluid setzt
+Layout und Template zusammen.
 
-If you're a more advanced user, you might want to leverage the unattended installation.
-To do this, you need to execute the following command and substitute the arguments
-with your own environment configuration.
+## Lokal starten
+
+Voraussetzung: [DDEV](https://ddev.readthedocs.io/) und Docker.
 
 ```bash
-export TYPO3_SETUP_ADMIN_PASSWORD=$(tr -dc "_A-Za-z0-9#=$()/" < /dev/urandom | head -c24)
-composer exec -- typo3 setup \
-    --no-interaction \
-    --server-type=other \
-    --driver=sqlite \
-    --admin-username=admin \
-    --admin-email="info@example.com" \
-    --project-name="My TYPO3 Project" \
-    --create-site="http://localhost:8000/"
-echo "Admin password: ${TYPO3_SETUP_ADMIN_PASSWORD}"
+git clone git@github.com:LittlePumpkin87/typo3-lernprojekt.git
+cd typo3-lernprojekt
+ddev start
+ddev composer install
+ddev import-db --file=db/seed.sql.gz   # Seiteninhalte — die leben in der DB, nicht im Repo
+ddev launch                            # Frontend
+ddev launch typo3                      # Backend
 ```
 
-### Development server
+Nach jeder Änderung an TypoScript oder YAML: `ddev typo3 cache:flush`.
 
-While it's advised to use a more sophisticated web server such as
-Apache 2 or Nginx, you can instantly run the project by using PHPs` built-in
-[web server](https://secure.php.net/manual/en/features.commandline.webserver.php).
+## Stand
 
-* `TYPO3_CONTEXT=Development php -S localhost:8000 -t public`
-* open your browser at "http://localhost:8000"
+- **S1** — Projektaufsetzung, Site-Konfiguration, Sitepackage als Site Set, Fluid-Grundgerüst.
+  Frontend rendert Navigation und Content-Elemente end-to-end.
+- **S2** — Projekt-Infrastruktur: eingefrorene Spec, Journal, DB-Seed.
+- **Als Nächstes** — Header, Navigation und Footer in Fluid-Partials auslagern, weitere
+  ViewHelper, danach das Text/Bild-Content-Element als Vergleichsanker zu den anderen
+  zwei Systemen.
 
-Please be aware that the built-in web server is single threaded and only meant
-to be used for development.
+Die Site läuft bewusst nur lokal — ein dauerhaft gehostetes CMS bedeutet Updates,
+Backups und Security-Patches ohne zusätzlichen Lerngewinn.
 
-##  Next steps
-
-* [Getting Started with TYPO3](https://docs.typo3.org/permalink/t3start:start)
-* [Create a Site Package](https://docs.typo3.org/permalink/t3sitepackage:start)
-
-## License
-
-GPL-2.0 or later
+<!-- Screenshots von Frontend und Backend hier einfügen, sobald das Layout steht. -->

@@ -1,23 +1,27 @@
-# Pumpkin Studio — gemeinsame Site-Spezifikation
+# Pumpkin Studio — shared site specification
 
-> **Eingefroren am 13.08.2026.** Diese Datei liegt identisch in allen drei Lernprojekt-Repos
-> (`typo3-lernprojekt`, `astro-lernprojekt`, `wp-lernprojekt`). Änderungen nur, wenn sie in
-> **allen drei** Repos nachgezogen werden — sonst laufen die Sites auseinander und der
-> Systemvergleich ist wertlos.
+> **Frozen on 2026-08-13.** This file is byte-identical in all three learning repositories
+> (`typo3-lernprojekt`, `astro-lernprojekt`, `wp-lernprojekt`). Change it only if the change
+> is carried into **all three** — otherwise the sites drift apart and the system comparison
+> is worthless.
+>
+> *Translated to English on 2026-09-19. The routes deliberately stay German: they are the
+> URLs of a fictional German agency, and changing them would be a change to the sites
+> themselves, not to their documentation.*
 
-Fiktive kleine Agentur **„Pumpkin Studio"**. Dieselbe Site, dreimal gebaut: einmal in
-TYPO3 v13, einmal als WordPress-Block-Theme (FSE), einmal in Astro. Der Sinn ist nicht die
-Site — der Sinn ist der direkte Vergleich der drei Wege zum selben Ergebnis.
+A fictional small agency called **"Pumpkin Studio"**. The same site, built three times: once
+in TYPO3 v13, once as a WordPress block theme (FSE), once in Astro. The point is not the
+site — the point is the direct comparison of three routes to the same result.
 
 ---
 
-## Seiten
+## Pages
 
 ```
-/                    Startseite
-/leistungen          Übersicht
+/                    Home
+/leistungen          Overview
 /leistungen/[slug]   Detail
-/blog                Liste
+/blog                List
 /blog/[slug]         Detail
 /kontakt
 /404
@@ -25,81 +29,82 @@ Site — der Sinn ist der direkte Vergleich der drei Wege zum selben Ergebnis.
 
 ---
 
-## Inhaltstypen
+## Content types
 
-### Leistung (4–5 Stück)
+### Service (4–5 of them) — `Leistung` in the UI
 
-| Feld | Typ | Anmerkung |
+| Field | Type | Note |
 |---|---|---|
 | `title` | Text | |
-| `slug` | Text | URL-Segment |
-| `teaser` | Text | kurz, für die Kachel im Grid |
-| `icon` | Text | String-Key, kein Upload |
-| `order` | Zahl | Sortierung im Grid |
-| `featured` | Bool | steuert das Startseiten-Grid |
-| `body` | Rich Text | |
+| `slug` | Text | URL segment |
+| `teaser` | Text | short, for the card in the grid |
+| `icon` | Text | string key, not an upload |
+| `order` | Number | sort order within the grid |
+| `featured` | Bool | drives the home page grid |
+| `body` | Rich text | |
 
-### Blogpost (5–6 Stück)
+### Blog post (5–6 of them)
 
-| Feld | Typ | Anmerkung |
+| Field | Type | Note |
 |---|---|---|
 | `title` | Text | |
 | `slug` | Text | |
-| `date` | Datum | |
+| `date` | Date | |
 | `teaser` | Text | |
-| `cover` + `alt` | Bild | Alt-Text ist Pflicht, nicht optional |
-| `tags[]` | Liste | |
-| `author` | Relation | → Autor |
+| `cover` + `alt` | Image | Alt text is required, not optional |
+| `tags[]` | List | |
+| `author` | Relation | → Author |
 | `draft` | Bool | |
-| `body` | Rich Text | |
+| `body` | Rich text | |
 
-### Autor (2 Stück)
+### Author (2 of them)
 
-| Feld | Typ |
+| Field | Type |
 |---|---|
 | `name` | Text |
 | `role` | Text |
-| `avatar` | Bild |
+| `avatar` | Image |
 
-Der Typ existiert aus genau einem Grund: **in jedem System einmal eine Relation bauen.**
-TYPO3 löst das anders als WordPress und anders als Astro — das ist der Lerninhalt.
+This type exists for exactly one reason: **to build one relation in every system.** TYPO3
+solves it differently from WordPress and differently from Astro — that is the thing being
+learned.
 
 ---
 
-## Startseiten-Sektionen (fixe Reihenfolge)
+## Home page sections (fixed order)
 
 1. **Hero**
-2. **Leistungs-Grid** — 3× `featured`
-3. **Text/Bild mit Umschalter links/rechts** ← Vergleichsanker
-4. **Zitat**
-5. **CTA-Band**
-6. **3 neueste Blogposts**
+2. **Service grid** — 3× `featured`
+3. **Text/image with a left/right switch** ← comparison anchor
+4. **Quote**
+5. **CTA band**
+6. **3 latest blog posts**
 
-> **Sektion 3 ist der Vergleichsanker.**
-> TYPO3 = eigenes Content-Element (Fluid + TCA/Content Blocks) ·
-> WordPress = eigener Block (`block.json` + Editor-UI) ·
-> Astro = `.astro`-Komponente mit `align`-Prop.
-> Dreimal dasselbe sichtbare Ergebnis, drei völlig verschiedene Wege.
+> **Section 3 is the comparison anchor.**
+> TYPO3 = custom content element (Fluid + TCA/Content Blocks) ·
+> WordPress = custom block (`block.json` + editor UI) ·
+> Astro = `.astro` component with an `align` prop.
+> The same visible result three times, three entirely different routes.
 
 ---
 
-## Design-Tokens
+## Design tokens
 
-Einmal festgelegt, dreimal getippt. Ohne identische Tokens driften die Sites optisch
-auseinander und der Vergleich verliert seinen Wert.
+Defined once, typed three times. Without identical tokens the sites drift apart visually
+and the comparison loses its value.
 
 ```
-Farben
+Colours
   ink      #1A1614
   paper    #FDFBF7
   pumpkin  #E8590C
   muted    #6B625C
   line     #E5DED5
 
-Typografie
+Typography
   Headings  Serif
-  Body      System-Stack
-  Größen    fluid via clamp()
+  Body      System stack
+  Sizes     fluid via clamp()
 
 Spacing
   4  8  16  24  40  64  96
@@ -110,18 +115,17 @@ Layout
   Radius       4px / 16px
 ```
 
-Umsetzung pro System — auch das ist Teil des Vergleichs:
+How each system implements them — part of the comparison too:
 
-| System | Tokens leben in |
+| System | Tokens live in |
 |---|---|
-| TYPO3 | SCSS-Map |
-| WordPress | `theme.json` Presets |
-| Astro | CSS Custom Properties |
+| TYPO3 | SCSS map |
+| WordPress | `theme.json` presets |
+| Astro | CSS custom properties |
 
 ---
 
-## Bewusst nicht Teil der Spec
+## Deliberately not part of the spec
 
-Kein Tailwind, kein UI-Framework, kein Headless-Setup, keine Mehrsprachigkeit, kein Shop.
-Handgeschriebenes CSS in allen drei Projekten — alles andere würde die Systeme
-unvergleichbar machen.
+No Tailwind, no UI framework, no headless setup, no multi-language, no shop. Hand-written
+CSS in all three projects — anything else would make the systems incomparable.

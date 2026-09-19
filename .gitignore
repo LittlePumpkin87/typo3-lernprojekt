@@ -14,3 +14,5 @@ nbproject
 /public/fileadmin/_temp_
 /public/fileadmin/_processed_
 
+.claude/
+CLAUDE.md
